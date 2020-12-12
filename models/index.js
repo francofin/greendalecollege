@@ -12,6 +12,10 @@ User.hasMany(Follower, {
     onDelete: 'CASCADE'
 });
 
+User.hasMany(Like, {
+    foreignKey: 'user_id'
+});
+
 User.hasMany(Post, {
     foreignKey:'user_id',
     onDelete: 'CASCADE'
@@ -28,6 +32,11 @@ User.belongsToMany(Image, {
     as: 'liked_images',
     foreignKey: 'user_id'
 });
+
+User.hasMany(Comment, {
+    foreignKey: 'user_id',
+    onDelete: 'NO ACTION'
+})
 
 // Post relationships
 
@@ -82,6 +91,30 @@ Like.belongsTo(Image, {
     foreignKey: 'image_id'
 });
 
+
+// Follower Relationships
+
+Follower.belongsTo(User, {
+    foreignKey: 'user_id',
+    onDelete: 'NO ACTION'
+});
+
+// Comment Relationships
+
+Comment.belongsTo(User, {
+    foreignKey:'user_id'
+});
+
+Comment.belongsTo(Post, {
+    foreignKey:'post_id'
+});
+
+Comment.belongsTo(Image, {
+    foreignKey:'image_id'
+});
+
+
+module.exports = {User, Post, Like, Follower, Comment, Image};
 
 
 
