@@ -15,7 +15,7 @@ class User extends Model {
       return models.Follow.create({
           user_id: body.user_id
       }).then(() => {
-          return Post.findOne({
+          return User.findOne({
               where: {
                   id: user.id
               },
@@ -28,9 +28,8 @@ class User extends Model {
             ]
           });
       });
-  }
-  
-  };
+  }  
+};
 
 User.init(
     {
