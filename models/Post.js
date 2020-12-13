@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 
 class Post extends Model {
     static uplike(body, models) {
-        return model.Like.create({
+        return models.Like.create({
             user_id: body.user_id,
             post_id: body.post_id,
         }).then(() => {

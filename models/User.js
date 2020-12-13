@@ -11,6 +11,24 @@ class User extends Model {
       // better to use compare sync
       return bcrypt.compareSync(loginPw, this.password);
     }
+    static follow(body, models) {
+      return models.Follow.create({
+          user_id: body.user_id
+      }).then(() => {
+          return Post.findOne({
+              where: {
+                  id: user.id
+              },
+              attributes: [
+                'username'
+                [
+                    sequlelize.literal('(SELECT COUNT(*) FROM follow where user.id = follow.user_id)'),
+                    'follow_count'
+                ]
+            ]
+          });
+      });
+  }
   
   };
 
