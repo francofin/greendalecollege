@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const {User, Post, Image, Like, Comment} = require('../../models');
-const { update } = require('../../models/User');
-const { route } = require('./user-routes');
+const {User, Update, Image, Like, Comment} = require('../../models');
+const sequelize = require('../../config/connection');
 
 
 router.get('/', (req, res) => {
@@ -11,28 +10,28 @@ router.get('/', (req, res) => {
             'title',
             'body',
             'created_at',
-            [sequelize.literal('SELECT COUNT(*) FROM like WHERE post.id = like.post_id'), 'like_count']
+            [
+                sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+                'like_count'
+              ]
         ],
         order: [['created_at', 'DESC']],
         include: [
                 {
-                    model:Comment,
-                    attributes:['id','body','post_id','user_id', 'created_at'],
+                    model: Comment,
+                    attributes:['id', 'comment_text', 'post_id','user_id', 'created_at'],
                     include: {
                         model:User,
                         attributes:['username']
                     }
                 },
                 {
-                    model:User,
+                    model: User,
                     attributes: ['username']
                 },
             ]
         })
-        .then(dbPostData => {
-            console.log(dbPostData);
-            res.json(dbPostData);
-        })
+        .then(dbPostData => res.json(dbPostData))
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
@@ -50,19 +49,22 @@ router.get('/:id', (req,res) => {
             'title',
             'body',
             'created_at',
-            [sequelize.literal('SELECT COUNT(*) FROM like WHERE post.id = like.post_id'), 'like_count']
+            [
+                sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+                'like_count'
+              ]
         ],
         include: [
             {
-                model:Comment,
-                attributes:['id','body','post_id','user_id', 'created_at'],
+                model: Comment,
+                attributes:['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model:User,
                     attributes:['username']
                 }
             },
             {
-                model:User,
+                model: User,
                 attributes: ['username']
             },
         ]
@@ -84,7 +86,7 @@ router.post('/', (req, res) => {
     Post.create({
         title: req.body.title,
         body: req.body.body,
-        user_id = req.session.user_id
+        user_id: req.session.user_id
     })
     .then(dbPostData => {
         res.json(dbPostData);

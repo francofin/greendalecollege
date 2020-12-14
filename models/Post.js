@@ -1,11 +1,11 @@
-const {Model, DataType, DataTypes } = require('sequelize');
+const {Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Post extends Model {
     static uplike(body, models) {
         return models.Like.create({
             user_id: body.user_id,
-            post_id: body.post_id,
+            post_id: body.post_id
         }).then(() => {
             return Post.findOne({
                 where: {
@@ -17,9 +17,9 @@ class Post extends Model {
                     'body',
                     'created_at',
                     [
-                        sequlelize.literal('(SELECT COUNT(*) FROM like where post.id = like.post_id)'),
+                        sequelize.literal('(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)'),
                         'like_count'
-                    ]
+                      ]
                 ]
             });
         });
@@ -49,14 +49,14 @@ Post.init(
               key: 'id'
             }
         },
-        image_id: {
-            type:DataTypes.INTEGER,
-            allowNull:true,
-            references: {
-                model:'image',
-                key:'id'
-            }
-        },
+        // image_id: {
+        //     type:DataTypes.INTEGER,
+        //     allowNull:true,
+        //     references: {
+        //         model:'image',
+        //         key:'id'
+        //     }
+        // },
     },
     {
         sequelize,

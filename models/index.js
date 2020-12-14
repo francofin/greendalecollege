@@ -41,7 +41,7 @@ User.hasMany(Image, {
 User.hasMany(Comment, {
     foreignKey: 'user_id',
     onDelete: 'NO ACTION'
-})
+});
 
 // Post relationships
 
@@ -83,7 +83,7 @@ Image.hasMany(Like, {
 });
 
 Image.hasMany(Comment, {
-    foreignKey:'post_id',
+    foreignKey:'image_id',
     onDelete:'CASCADE'
 })
 
