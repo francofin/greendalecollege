@@ -2,7 +2,7 @@ const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-const saltRounds = 20;
+const saltRounds = 10;
 
 class User extends Model {
     // set up method to run on instance data (per user) to check password

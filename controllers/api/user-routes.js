@@ -1,19 +1,20 @@
 const router = require('express').Router();
-const {User, Post, Image, Like} = require('../../models');
-const Comment = require('../../models/Comment');
+const {User, Post, Image, Like, Comment} = require('../../models');
+const sequelize = require('../../config/connection');
 
 
 //Get users
 router.get('/', (req, res) => {
+    // Access our User model and run .findAll() method)
     User.findAll({
-        attributes: {exclude: ['password']}
+      attributes: { exclude: ['password'] }
     })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
         console.log(err);
         res.status(500).json(err);
-    });
-});
+      });
+  });
 
 
 //get user by id
@@ -29,13 +30,13 @@ router.get('/:id', (req, res) => {
                     model: Post,
                     attributes: ['title','body', 'created_at']
                 },
-                {
-                    model: Image,
-                    attributes: ['name', 'data', 'created_at']
-                },
+                // {
+                //     model: Image,
+                //     attributes: ['name', 'data', 'created_at']
+                // },
                 {
                     model: Comment,
-                    attributes: ['id', 'body', 'created_at'],
+                    attributes: ['id', 'comment_text', 'created_at'],
                     include: [{
                         model: Post,
                         attributes: ['title']
@@ -83,13 +84,14 @@ router.post('/', (req, res) => {
     .then(dbUserData => {
         req.session.save(() => {
             req.session.user_id = dbUserData.id;
-            req.session.username = dbUserData.username;
+            req.session.email = dbUserData.email;
             req.session.loggedIn = true;
 
             res.json(dbUserData);
         });
     });
 });
+
 
 router.post('/login', (req, res) => {
     User.findOne({
@@ -112,7 +114,7 @@ router.post('/login', (req, res) => {
                 req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
 
-                req.json({ user:dbUserData, message: 'You are now successfully logged in'});
+                res.json({ user:dbUserData, message: 'You are now successfully logged in'});
             });
     });
 });

@@ -138,7 +138,7 @@ header .banner-area{ background: url(../images/banner-1-800x200.jpg) no-repeat c
 header .banner-area:after{ content:''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
 	background: #000; opacity: .5; z-index: -1; }
 
-header .logo{ float: left; height: 24px; margin: 28px 0; }
+header .logo{ float: left; height: 60px; margin: 0px 0px; padding-bottom: 200px; }
 
 header .logo img{ height: 100%; width: auto; }
 
