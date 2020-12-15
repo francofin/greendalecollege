@@ -2,7 +2,7 @@ const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 
 
-class Comment extends Model {};
+class Comment extends Model {}
 
 
 Comment.init({
@@ -26,13 +26,13 @@ Comment.init({
             key: 'id'
         }
     },
-    image_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'image',
-            key: 'id'
-        }
-    },
+    // image_id: {
+    //     type: DataTypes.INTEGER,
+    //     references: {
+    //         model: 'image',
+    //         key: 'id'
+    //     }
+    // },
     user_id: {
         type: DataTypes.INTEGER,
         references: {

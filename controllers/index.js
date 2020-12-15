@@ -3,7 +3,7 @@ const router = require('express').Router();
 const apiRoutes = require('./api');
 const uploadRoutes = require('./upload.js');
 const homeRoutes = require('./home-routes.js');
-const profileRoutes = require('./profile-routes');
+const profileRoutes = require('./profile-routes.js');
 
 
 router.use('/', homeRoutes);
