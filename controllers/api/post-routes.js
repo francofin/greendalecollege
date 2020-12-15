@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Update, Image, Like, Comment} = require('../../models');
+const {User, Post, Image, Like, Comment} = require('../../models');
 const sequelize = require('../../config/connection');
 
 
@@ -10,10 +10,10 @@ router.get('/', (req, res) => {
             'title',
             'body',
             'created_at',
-            [
-                sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
-                'like_count'
-              ]
+            // [
+            //     sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+            //     `like_count`
+            //   ],
         ],
         order: [['created_at', 'DESC']],
         include: [
@@ -49,10 +49,10 @@ router.get('/:id', (req,res) => {
             'title',
             'body',
             'created_at',
-            [
-                sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
-                'like_count'
-              ]
+            // [
+            //     sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+            //     'like_count'
+            //   ],
         ],
         include: [
             {

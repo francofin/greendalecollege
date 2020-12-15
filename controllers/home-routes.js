@@ -1,25 +1,24 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const withAuth = require('../utils/auth');
 const { User, Comment, Image, Like, Post } = require('../models');
 
 router.get('/', (req, res) => {
   console.log(req.session);
-    res.render('homepage');
+    res.render('homepage', {loggedIn:req.session.loggedIn});
   });
 
   
-router.get("/", withAuth, (req, res) => {
+router.get("/", (req, res) => {
   Post.findAll({
     attributes: [
       'id',
       'title',
       'body',
       'created_at',
-      [
-        sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
-        'like_count'
-      ]
+      // [
+      //   sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+      //   'like_count'
+      // ],
     ],
     include: [
       {
@@ -37,8 +36,8 @@ router.get("/", withAuth, (req, res) => {
     ]
   })
   .then((dbPostData) => {
-    const posts = dbPostData.map((posts) => this.post.get({plain:true}));
-    res.render('homepage', {posts});
+    const posts = dbPostData.map((post) => post.get({plain:true}));
+    res.render('homepage', {posts, loggedIn: req.session.loggedIn});
   })
   .catch((err) => {
     res.status(500).json(err);

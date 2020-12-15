@@ -14,10 +14,10 @@ router.get('/', withAuth, (req, res) => {
         'title',
         'body',
         'created_at',
-        [
-          sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
-          'like_count'
-        ]
+        // [
+        //   sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
+        //   `like_count`
+        // ],
       ],
       include: [
         {
@@ -36,8 +36,8 @@ router.get('/', withAuth, (req, res) => {
     })
       .then(dbPostData => {
         // serialize data before passing to template
-        const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('profile', { layout: "dashboard", posts });
+        const posts = dbPostData.map((post) => post.get({ plain: true }));
+        res.render("profile", { layout: "dashboard", posts, loggedIn:req.session.loggedIn });
       })
       .catch(err => {
         console.log(err);
@@ -45,19 +45,19 @@ router.get('/', withAuth, (req, res) => {
       });
   });
 
-  router.get('/', withAuth, (req, res) => {
-    User.findOne({
-      where: {
-        user_id: req.session.user_id
-      }, 
-      attributes: ['username']
-    })
-    .then(dbPostData => {
-      // serialize data before passing to template
-      const name = dbPostData.map(name => name.get({ plain: true }));
-      res.render('profile', { name, layout: "dashboard", loggedIn: true });
-    })
-  });
+  // router.get('/', withAuth, (req, res) => {
+  //   User.findOne({
+  //     where: {
+  //       user_id: req.session.user_id
+  //     }, 
+  //     attributes: ['username']
+  //   })
+  //   .then(dbPostData => {
+  //     // serialize data before passing to template
+  //     const name = dbPostData.map(name => name.get({ plain: true }));
+  //     res.render('profile', { name, layout: "dashboard", loggedIn: true });
+  //   })
+  // });
 
   // router.get('/', withAuth, (req, res) => {
   //   Image.findAll({
