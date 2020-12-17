@@ -62,6 +62,14 @@ User.init(
               // this means the password must be at least eight characters long
               len: [8]
             }
+          },
+          user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+              model: 'user',
+              key: 'id'
+            } 
+            
           }
     },
     {

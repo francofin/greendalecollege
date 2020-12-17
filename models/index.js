@@ -43,6 +43,8 @@ User.hasMany(Comment, {
     onDelete: 'NO ACTION'
 });
 
+
+
 // Post relationships
 
 Post.belongsTo(User, {
@@ -85,7 +87,11 @@ Image.hasMany(Like, {
 Image.hasMany(Comment, {
     foreignKey:'image_id',
     onDelete:'CASCADE'
-})
+});
+
+
+
+
 
 // like relationships
 
@@ -105,9 +111,9 @@ Like.belongsTo(Image, {
 // Follower Relationships
 
 Follower.belongsTo(User, {
-    foreignKey: 'user_id',
-    onDelete: 'NO ACTION'
+    foreignKey: 'user_id'
 });
+
 
 // Comment Relationships
 
