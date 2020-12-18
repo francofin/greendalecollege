@@ -67,6 +67,12 @@ Post.hasMany(Like, {
     foreignKey: 'post_id'
 });
 
+// Post.belongsTo(Image, {
+//     foreignKey: 'image_id'
+// });
+
+
+
 // image relationships
 
 Image.belongsTo(User, {
@@ -89,6 +95,10 @@ Image.hasMany(Comment, {
     onDelete:'CASCADE'
 });
 
+Image.belongsTo(Post, {
+    foreignKey: 'post_id',
+    constraints: false
+})
 
 
 

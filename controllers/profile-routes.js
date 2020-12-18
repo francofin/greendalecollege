@@ -31,18 +31,20 @@ const { Post, User, Image, Comment } = require('../models');
 //         {
 //           model: User,
 //           attributes: ['username']
-//         }
+//         },
+        
 //       ]
 //     })
 //       .then(dbPostData => {
 //         // serialize data before passing to template
 //         const posts = dbPostData.map((post) => post.get({ plain: true }));
-//         res.render("profile", { layout: "dashboard", posts, loggedIn:req.session.loggedIn });
+//         console.log("imagelinkedpost", posts);
+//         res.render("profile", { layout: "dashboard", posts:posts, loggedIn:req.session.loggedIn });
 //       })
 //       .catch(err => {
 //         console.log(err);
 //         res.status(500).json(err);
-//       });
+//       })
 //   });
 
   router.get('/', withAuth, (req, res) => {
@@ -55,6 +57,8 @@ const { Post, User, Image, Comment } = require('../models');
                 'id',
                 'name',
                 'data',
+                'body',
+                'title',
                 'created_at',
                 // [
                 //   sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),

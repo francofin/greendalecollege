@@ -5,27 +5,45 @@ const uploader = require("../../utils/upload");
 const withAuth = require("../../utils/auth");
 
 
+
 router.post("/", withAuth, uploader.single('file'), (req, res) => {
-    
-    Image.create({
-        data: fs.readFileSync("resources/" + req.file.filename),
-        name: req.file.originalname,
-        file_type: req.file.mimetype
-    })
-        .then(image => {
-            console.log(image);
+    console.log(req);
+    if(req.file == undefined) {
+        Image.create({
+            title: req.body.title,
+            body: req.body.text,
+            user_id: req.session.user_id
+        })
+        .then(newPost => {
+            res.json(newPost);
+        })
+        .catch(err => {
+            res.status(500).json(err);
         });
+        
+    } else {
+        Image.create({
+            data: fs.readFileSync("resources/" + req.file.filename),
+            name: req.file.originalname,
+            file_type: req.file.mimetype
+        })
+            .then(image => {
+                console.log(image);
+            });
 
     const data = req.file.path;
     //console.log(req.body.title, req.body.text, req.session.user_id);
-    console.log("path", req.file.path);
+    console.log("path", req);
     console.log(req.file);
 
     Image.create({
         file_type: req.file.mimetype,
+        body: req.body.text,
+        title: req.body.title,
         data:req.file.filename, 
-        name: req.file.filename,
-        user_id: req.session.user_id 
+        name: req.file.originalname,
+        user_id: req.session.user_id ,
+        post_id: req.body.post_id,
     })
         .then(newPost => {
             res.json(newPost);
@@ -33,7 +51,7 @@ router.post("/", withAuth, uploader.single('file'), (req, res) => {
         .catch(err => {
             res.status(500).json(err);
         });
-
+    }
 });
 
 

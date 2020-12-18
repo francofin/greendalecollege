@@ -14,25 +14,10 @@
           </div>
 
           <div class="col-md-6">
-            <div class="details">
-              <h2 class="p-title">Continue adding to our great blog.</h2>
-                <h2 class="mt-30">Create New Post</h2>
-                <form id = "new-post-form" class="php-email-form" >
-                    <div>
-                    <label for="post-title">Title</label>
-                    <input type="text" id="post-title" name="post-title" />
-                    </div>
-                    <div class="form-group">
-                    <textarea class="form-control" id ="post-body" name="post-body" rows="5" placeholder="Message"></textarea>
-                    <div class="validate"></div>
-                    </div>
-                    <button type="submit" class="btn">Create</button>
-                </form>
-            </div>
              <div class="details">
               <h2 class="p-title">Continue adding to our great blog.</h2>
                 <h2 class="mt-30">Create New Post</h2>
-                <form id = "image-post-form" class="php-email-form" enctype="multipart/form-data">
+                <form id = "image-post-form" class="new-post-form" enctype="multipart/form-data">
                     <div>
                     <label for="post-title2">Title</label>
                     <input type="text" id="post-title2" name="post-title" />
@@ -43,9 +28,9 @@
                     </div>
                     <div>
                       <label class="form-label" for="post-image">Post Image</label>
-                      <input type="file" id='post-image' name="post-image" accept="image/*" class="form-input" />
+                      <input type="file" id='post-image' name="post-image" accept="image/*" class="form-control-file" />
                     </div>
-                    <button type="submit" class="btn">Upload Image</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
                 </form>
             </div>
           </div>
@@ -56,60 +41,43 @@
 
     </section>
 
-    {{#if posts.length}}
-    <section id="schedule" class="section-with-bg">
-      <div class="container" data-aos="fade-up">
-        <div class="section-header">
-          <h2>Latest Posts</h2>
-        </div>
-
-        <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
-
-          <!-- Schdule Day 1 -->
-          <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-1">
-              
-              <h2>Your Posts</h2>
-              {{#each posts}}
-
-            <div class="row schedule-item">
-              <div class="col-md-2"><time>{{format_date created_at}}</time></div>
-              <div class="col-md-10">
-                <h4>Post by <span>{{user.username}}</span></h4>
-                <a href="/post/{{id}}">{{title}}</a>
-                <p>{{body}}</p>
-                <a href="/edit-post/{{id}}" class="edit-link">Edit post</a>
-              </div>
-            </div>
-            {{/each}}
-
-          </div>
-          </section>
-          {{/if}}
 
     {{#if images.length}}
     <section id="schedule" class="section-with-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-header">
-          <h2>Latest Posts</h2>
+          <h2>Your Posts</h2>
         </div>
 
         <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
 
           <!-- Schdule Day 1 -->
           <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-1">
-              
-              <h2>Your Posts</h2>
               {{#each images}}
-
-            <div class="row schedule-item">
-              <div class="col-md-2"><time>{{format_date created_at}}</time></div>
-              <div class="col-md-10">
-                <h4>Post by <span>{{user.username}}</span></h4>
-                <a href="/post/{{id}}">{{name}}</a>
-                <img src="{{name}}" alt="">
-                <a href="/edit-post/{{id}}" class="edit-link">Edit post</a>
-              </div>
-            </div>
+                {{#if data}}
+                <div class="mb-30 p-30 ptb-sm-25 plr-sm-15 card-view">
+						<h4 class="p-title"><b>TODAY FEATURED</b></h4>
+						<img src="{{data}}" alt="">
+						<h3 class="mt-30"><a href="#">{{title}}</a></h3>
+						<ul class="mtb-10 list-li-mr-20 color-lite-black">
+							<li><i class="mr-5 font-12 ion-clock"></i>{{format_date created_at}}</li>
+							<li><i class="mr-5 font-12 ion-android-person"></i>{{user.username}}</li>
+							<li><i class="mr-5 font-12 ion-ios-chatbubble-outline"></i>15</li>
+							<li><i class="mr-5 font-12 ion-eye"></i>105</li>
+						</ul>
+						<p>{{body}}</p>
+					</div><!-- bg-white -->
+          {{else}}
+              <div class="mb-30 p-30 ptb-sm-25 plr-sm-15 card-view">
+						<h3 class="mt-30"><a href="#">{{body}}</a></h3>
+						<ul class="mtb-10 list-li-mr-20 color-lite-black">
+							<li><i class="mr-5 font-12 ion-clock"></i>{{format_date created_at}}</li>
+							<li><i class="mr-5 font-12 ion-android-person"></i>{{user.username}}</li>
+							<li><i class="mr-5 font-12 ion-ios-chatbubble-outline"></i>15</li>
+							<li><i class="mr-5 font-12 ion-eye"></i>105</li>
+						</ul>
+					</div><!-- bg-white -->
+              {{/if}}
             {{/each}}
 
           </div>

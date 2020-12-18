@@ -14,10 +14,19 @@ Image.init({
     },
     file_type: {
         type: DataTypes.STRING,
+        allowNull:true
     },
     name: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    title: {
+        type:DataTypes.STRING,
+        allowNull:true
+    },
+    body:{
+        type: DataTypes.STRING,
+        allowNull:true,
     },
     data: {
         type: DataTypes.BLOB("long"),
@@ -32,7 +41,6 @@ Image.init({
     },
     post_id: {
         type:DataTypes.INTEGER,
-        allowNull:true,
         references: {
             model:'post',
             key:'id'

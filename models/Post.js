@@ -36,7 +36,7 @@ Post.init(
         },
         title: {
             type: DataTypes.STRING,
-            allowNull:false
+            allowNull:true
         },
         body: {
             type: DataTypes.STRING,
@@ -51,7 +51,6 @@ Post.init(
         },
         // image_id: {
         //     type:DataTypes.INTEGER,
-        //     allowNull:true,
         //     references: {
         //         model:'image',
         //         key:'id'

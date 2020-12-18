@@ -1,8 +1,8 @@
 const newFormHandler = async function(event) {
     event.preventDefault();
-    const title = document.querySelector('input[name="post-title"]').value;
+    const title = document.querySelector('#post-title2').value;
 
-    const body = document.querySelector('textarea[name="post-body"]').value;
+    const body = document.querySelector('#post-body2').value;
 
     const token = localStorage.getItem("token");
     await fetch(`/api/posts`, {
@@ -12,11 +12,11 @@ const newFormHandler = async function(event) {
             body
         }),
         headers: {
-            "Content-Type": "application/json",
+            accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8, application/json',
             authorization: `Bearer ${token}`
         }
     });
     document.location.replace('/profile');
 };
 
-document.querySelector('#new-post-form').addEventListener("submit", newFormHandler);
+document.querySelector('.new-post-form').addEventListener("submit", newFormHandler);
