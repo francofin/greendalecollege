@@ -1,7 +1,7 @@
 const User = require('./User');
 const Post = require('./Post');
 const Follower = require('./Follower');
-const Like = require('./Like');
+const Vote = require('./Vote');
 const Comment = require('./Comment');
 const Image = require('./Image');
 
@@ -12,7 +12,7 @@ User.hasMany(Follower, {
     onDelete: 'CASCADE'
 });
 
-User.hasMany(Like, {
+User.hasMany(Vote, {
     foreignKey: 'user_id'
 });
 
@@ -22,14 +22,14 @@ User.hasMany(Post, {
 });
 
 User.belongsToMany(Post, {
-    through: Like,
-    as: 'liked_posts',
+    through: Vote,
+    as: 'Voted_posts',
     foreignKey: 'user_id'
 });
 
 User.belongsToMany(Image, {
     through: Image, 
-    as: 'liked_images',
+    as: 'Voted_images',
     foreignKey: 'user_id'
 });
 
@@ -58,12 +58,12 @@ Post.hasMany(Comment, {
 });
 
 Post.belongsToMany(User, {
-    through: Like, 
-    as: 'liked_posts',
+    through: Vote, 
+    as: 'Voted_posts',
     foreignKey: 'post_id'
 });
 
-Post.hasMany(Like, {
+Post.hasMany(Vote, {
     foreignKey: 'post_id'
 });
 
@@ -81,12 +81,12 @@ Image.belongsTo(User, {
 });
 
 Image.belongsToMany(User, {
-    through: Like, 
-    as: 'liked_images',
+    through: Vote, 
+    as: 'Voted_images',
     foreignKey: 'image_id'
 });
 
-Image.hasMany(Like, {
+Image.hasMany(Vote, {
     foreignKey: 'image_id'
 });
 
@@ -103,17 +103,17 @@ Image.belongsTo(Post, {
 
 
 
-// like relationships
+// Vote relationships
 
-Like.belongsTo(User, {
+Vote.belongsTo(User, {
     foreignKey:'user_id'
 });
 
-Like.belongsTo(Post, {
+Vote.belongsTo(Post, {
     foreignKey: 'post_id'
 });
 
-Like.belongsTo(Image, {
+Vote.belongsTo(Image, {
     foreignKey: 'image_id'
 });
 
@@ -140,7 +140,7 @@ Comment.belongsTo(Image, {
 });
 
 
-module.exports = {User, Post, Like, Follower, Comment, Image};
+module.exports = {User, Post, Vote, Follower, Comment, Image};
 
 
 

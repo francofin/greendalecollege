@@ -310,6 +310,9 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .br-2{ border-radius: 2px; }
 .br-3{ border-radius: 3px; }
 
+.hide{
+	display:none;  
+  }
 
 /* CARDVIEW */
 

@@ -96,16 +96,16 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/uplike', (req, res) => {
-    if(req.session){
-        Post.uplike({ ...req.body, user_id:req.session.user_id}, {Like, Comment, User})
-        .then(updatedLike => res.json(updatedLike))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        }); 
-    }
-});
+// router.put('/uplike', (req, res) => {
+//     if(req.session){
+//         Post.uplike({ ...req.body, user_id:req.session.user_id}, {Like, Comment, User})
+//         .then(updatedLike => res.json(updatedLike))
+//         .catch(err => {
+//             console.log(err);
+//             res.status(500).json(err);
+//         }); 
+//     }
+// });
 
 router.put('/:id', (req, res) => {
     Post.update(

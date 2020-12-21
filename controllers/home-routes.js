@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { User, Comment, Image, Like, Post } = require('../models');
+const { User, Comment, Image, Vote, Post } = require('../models');
 
 // router.get('/', (req, res) => {
 //   console.log(req.session);
@@ -10,15 +10,11 @@ const { User, Comment, Image, Like, Post } = require('../models');
   
 router.get("/", (req, res) => {
   Image.findAll({
-    where: {
-      // use the ID from the session
-      user_id: req.session.user_id
-    },
     attributes: [
               'id',
               'name',
               'data',
-              'body',
+              'body_text',
               'title',
               'created_at',
               // [
@@ -37,9 +33,10 @@ router.get("/", (req, res) => {
       },
       {
         model: User,
-        attributes: ['username']
+        attributes: ['id', 'username']
       }
-    ]
+    ], 
+    orderby: [['created_at', 'DESC']]
   })
   .then((dbPostData) => {
     const posts = dbPostData.map((post) => post.get({plain:true}));
@@ -58,6 +55,16 @@ router.get('/login', (req, res) => {
 
   res.render("login", {
     layout: 'dashboard'
+  });
+});
+
+
+
+router.get('/contact', (req, res) => {
+
+  res.render("contact", {
+    layout: 'dashboard',
+    loggedIn: req.session.loggedIn
   });
 });
 

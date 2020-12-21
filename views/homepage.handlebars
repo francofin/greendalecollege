@@ -15,10 +15,13 @@
 								<ul class="mtb-10 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format_date created_at}}</li>
 									<li><i class="mr-5 font-12 ion-android-person"></i>{{user.username}}</li>
+									<li class='hide' id='hidden-id'>{{id}}</li>
+									<li class='hide' id='hidden-id-{{id}}'>{{id}}</li>
+									<li><button type="button" id="upvote-btn">like</button></li>
 									<li><i class="mr-5 font-12 ion-ios-chatbubble-outline"></i>15</li>
 									<li><i class="mr-5 font-12 ion-eye"></i>105</li>
 								</ul>
-								<p>{{body}}</p>
+								<p>{{body_text}}</p>
 							</div><!-- bg-white -->
 						{{else}}
 							<div class="mb-30 p-30 ptb-sm-25 plr-sm-15 card-view">
@@ -26,6 +29,9 @@
 								<ul class="mtb-10 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format_date created_at}}</li>
 									<li><i class="mr-5 font-12 ion-android-person"></i>{{user.username}}</li>
+									<li class='hide' id='hidden-id'>{{id}}</li>
+									<li class='hide' id='hidden-id-{{id}}'></li>
+									<li><button type="button" id="upvote-btn">like</button></li>
 									<li><i class="mr-5 font-12 ion-ios-chatbubble-outline"></i>15</li>
 									<li><i class="mr-5 font-12 ion-eye"></i>105</li>
 								</ul>
@@ -296,3 +302,9 @@
 			</div><!-- row -->
 		</div><!-- container -->
 	</section>
+
+
+	{{#if loggedIn}}
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/like.js"></script>
+{{/if}}

@@ -57,13 +57,13 @@ const { Post, User, Image, Comment } = require('../models');
                 'id',
                 'name',
                 'data',
-                'body',
+                'body_text',
                 'title',
                 'created_at',
-                // [
-                //   sequelize.literal(`(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)`),
-                //   `like_count`
-                // ],
+                [
+                  sequelize.literal(`(SELECT COUNT(*) FROM vote WHERE image.id = vote.image_id)`),
+                  `vote_count`
+                ],
               ],
       include: [
         {
@@ -78,13 +78,13 @@ const { Post, User, Image, Comment } = require('../models');
           model: User,
           attributes: ['username']
         }
-      ]
+      ],
+      order: [['created_at', 'DESC']],
     })
       .then(dbPostData => {
         // serialize data before passing to template
         const images = dbPostData.map((post) => post.get({ plain: true }));
         // const image = req.file.path;
-        console.log("new data", images); 
         res.render("profile", { layout: "dashboard", images:images, loggedIn:req.session.loggedIn });
       })
       .catch(err => {

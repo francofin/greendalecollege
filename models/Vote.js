@@ -2,9 +2,9 @@ const {Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 
-class Like extends Model {};
+class Vote extends Model {};
 
-Like.init(
+Vote.init(
     {
         id: {
             type:DataTypes.INTEGER,
@@ -19,14 +19,14 @@ Like.init(
                 key:'id'
             }
         },
-        post_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-            model: 'post',
-            key: 'id'
-        }
-    },
+    //     post_id: {
+    //         type: DataTypes.INTEGER,
+    //         allowNull: false,
+    //         references: {
+    //         model: 'post',
+    //         key: 'id'
+    //     }
+    // },
         image_id: {
             type: DataTypes.INTEGER,
                 allowNull: false,
@@ -38,11 +38,11 @@ Like.init(
     },
     {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
         underscored: true,
-        modelName: 'like'
+        modelName: 'vote'
       }   
 );
 
-module.exports = Like;
+module.exports = Vote;

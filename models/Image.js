@@ -2,7 +2,32 @@ const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 
 
-class Image extends Model {};
+class Image extends Model {
+    static upvote(body, models) {
+    return models.Vote.create({
+        user_id: body.user_id,
+        image_id: body.image_id
+    }).then(() => {
+        console.log(body);
+        return Image.findOne({
+            where: {
+                id: body.image_id
+            },
+            attributes: [
+                'id',
+                'title',
+                'name',
+                'body_text',
+                'data',
+                'created_at',
+                [
+                    sequelize.literal("(SELECT COUNT(*) FROM vote WHERE image.id = vote.image_id)"),
+                    'vote_count'
+                  ]
+            ]
+        });
+    });
+}};
 
 
 Image.init({
@@ -24,7 +49,7 @@ Image.init({
         type:DataTypes.STRING,
         allowNull:true
     },
-    body:{
+    body_text:{
         type: DataTypes.STRING,
         allowNull:true,
     },
@@ -39,13 +64,13 @@ Image.init({
           key: 'id'
         }
     },
-    post_id: {
-        type:DataTypes.INTEGER,
-        references: {
-            model:'post',
-            key:'id'
-        }
-    }
+    // post_id: {
+    //     type:DataTypes.INTEGER,
+    //     references: {
+    //         model:'post',
+    //         key:'id'
+    //     }
+    // }
 },
 {
     sequelize,

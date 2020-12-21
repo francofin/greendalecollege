@@ -63,14 +63,6 @@ User.init(
               len: [8]
             }
           },
-          user_id: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'user',
-              key: 'id'
-            } 
-            
-          }
     },
     {
         hooks: {
