@@ -1,23 +1,29 @@
-let idArray = document.querySelectorAll("#hidden-id");
-    const elem_list = [];
-    idArray.forEach(async function(elem) {
-      elem_list.push(elem.textContent);
-      console.log(elem);
-      console.log(elem.textContent);
-    
-  });
-
-function upvoteClickHandler(event) {
+async function upvoteClickHandler(event) {
     event.preventDefault();
-    
+  
+    function find_id() {
+    let idArray = document.querySelectorAll("#hidden-id");
+    elem_list = [];
+    idArray.forEach(function(elem) {
+      elem_list.push(elem.textContent)
+    });
+    console.log(elem_list);
+    for(var i =0; i<elem_list.length; i++) {
+      if(elem_list[i] === document.querySelector(".hidden-id-"+elem_list[i]).textContent) {
+        let body_id = elem_list[i]
+        return body_id;
+      }
+    }
+  }
+
+  const id = find_id();
+  console.log("id", id);
     const token = localStorage.getItem("token");
-    for(var i = 0; i<elem_list.length; i++ ) {
-      if(elem_list[i]=== parseInt(document.querySelector("#hidden-id-"+elem_list[i]).textContent))
-    const id_for_body = elem_list[i]
+  
     const response = await fetch('/api/images/upvote', {
         method: 'POST',
         body: JSON.stringify({
-          image_id: id_for_body
+          image_id: id
         }),
         headers: {
             authorization: `Bearer ${token}`,
@@ -31,12 +37,6 @@ function upvoteClickHandler(event) {
         alert(response.statusText);
         console.log("response", response);
       }
-    }
-    
-    
-    // const user_id = document.querySelector('#user-id').textContent;
-    // console.log(id);
-    
   }
   
   let elementsArray = document.querySelectorAll('#upvote-btn');
