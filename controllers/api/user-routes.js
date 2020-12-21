@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Post, Image, Vote, Comment} = require('../../models');
+const {User, Post, Image, Follower, Vote, Comment} = require('../../models');
 const sequelize = require('../../config/connection');
 
 
@@ -7,7 +7,17 @@ const sequelize = require('../../config/connection');
 router.get('/', (req, res) => {
     // Access our User model and run .findAll() method)
     User.findAll({
-      attributes: { exclude: ['password'] }
+      attributes: [
+          'id',
+          'username',
+          'email',
+          'created_at',
+        [
+            sequelize.literal(`(SELECT COUNT(*) FROM follower WHERE user.id = follower.follower_id)`),
+            `follow_count`
+          ]
+      ],
+      include: [Follower]
     })
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
@@ -74,6 +84,23 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.post('/follow', (req, res) => {
+    // make sure the session exists first
+    console.log("body respnse", req.body);
+    if (req.session) {
+        console.log("body respnse", req.body);
+      // pass session id along with all destructured properties on req.body
+      User.follow({...req.body, follower_id: req.session.user_id }, { Follower })
+        .then(updatedFollowerData => {
+            console.log(updatedFollowerData);
+            res.json(updatedFollowerData)})
+        .catch(err => {
+          console.log(err);
+          res.status(400).json(err);
+          console.log("body respnse", err);
+        });
+    }
+  });
 
 router.post('/', (req, res) => {
     User.create({

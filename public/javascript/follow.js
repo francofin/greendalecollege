@@ -1,15 +1,15 @@
-async function upvoteClickHandler(event) {
+async function followHandler(event) {
     event.preventDefault();
     console.log(event.target);
-    const id = (event.target.getAttribute('data_id'));
+    const id = (event.target.getAttribute('user_id'));
     // const user_id = document.querySelector('#user-id').textContent;
     console.log(id);
     const token = localStorage.getItem("token");
   
-    const response = await fetch('/api/images/upvote', {
+    const response = await fetch('/api/users/follow', {
         method: 'POST',
         body: JSON.stringify({
-          image_id: id
+          user_id: id
         }),
         headers: {
             authorization: `Bearer ${token}`,
@@ -25,12 +25,12 @@ async function upvoteClickHandler(event) {
       }
   }
   
-  let elementsArray = document.querySelectorAll('#upvote-btn');
+  let userArray = document.querySelectorAll('#follow-btn');
 
 
   //document.querySelector('#upvote-btn').addEventListener('click', upvoteClickHandler);
 
 
-  elementsArray.forEach(function(elem) {
-    elem.addEventListener("click", upvoteClickHandler)
+  userArray.forEach(function(elem) {
+    elem.addEventListener("click", followHandler)
 });

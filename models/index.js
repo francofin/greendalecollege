@@ -8,7 +8,7 @@ const Image = require('./Image');
 // user relationships
 
 User.hasMany(Follower, {
-    foreignKey:'user_id',
+    foreignKey:'follower_id',
     onDelete: 'CASCADE'
 });
 
@@ -121,7 +121,7 @@ Vote.belongsTo(Image, {
 // Follower Relationships
 
 Follower.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'follower_id'
 });
 
 
